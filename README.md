@@ -16,8 +16,11 @@ Commands
 --------
 
 `move_text_left`: Moves the selected text one character to the left
+
 `move_text_right`: Moves the selected text one character to the right
+
 `move_text_up`: Moves the selected text one line up
+
 `move_text_down`: Moves the selected text one line down
 
 When moving text up and down, funny things happen when the destination line doesn't
