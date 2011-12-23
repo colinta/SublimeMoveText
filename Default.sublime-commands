@@ -1,0 +1,18 @@
+[
+    {
+        "caption": "MoveText: Move Left",
+        "command": "move_text_left"
+    },
+    {
+        "caption": "MoveText: Move Right",
+        "command": "move_text_right"
+    },
+    {
+        "caption": "MoveText: Move Up",
+        "command": "move_text_up"
+    },
+    {
+        "caption": "MoveText: Move Down",
+        "command": "move_text_down"
+    }
+]
