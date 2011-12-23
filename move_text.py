@@ -1,4 +1,4 @@
-from sublime import Region, status_message
+from sublime import Region
 from sublime_plugin import TextCommand
 
 
@@ -65,7 +65,6 @@ def move_text_vert(view, edit, direction):
         #
         # it's possible that there aren't enough characters in the destination row,
         # so try and advance the column until we end up on the wrong row
-        dest_col = 0
         while view.rowcol(point + 1)[0] == dest_row and view.rowcol(point + 1)[1] <= col:
             print view.rowcol(point + 1)
             point += 1
