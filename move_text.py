@@ -54,7 +54,11 @@ def move_text_vert(view, edit, direction):
             region = Region(region.b, region.a)
 
         # calculate number of characters to the left
-        (row, col) = view.rowcol(region.a)
+        # of the *last* row
+        if direction < 0:
+            (row, col) = view.rowcol(region.a)
+        else:
+            (row, col) = view.rowcol(region.b)
         dest_row = row + direction
 
         if direction < 0 and dest_row < 0 or \
@@ -66,8 +70,8 @@ def move_text_vert(view, edit, direction):
         # it's possible that there aren't enough characters in the destination row,
         # so try and advance the column until we end up on the wrong row
         while view.rowcol(point + 1)[0] == dest_row and view.rowcol(point + 1)[1] <= col:
-            print view.rowcol(point + 1)
             point += 1
+        print view.rowcol(point)
 
         # status_message(str(point))
 
