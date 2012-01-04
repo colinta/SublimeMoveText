@@ -66,7 +66,7 @@ class MoveTextVertCommand(TextCommand):
         # if the last command was a vertical move, use that column
         # the column is stored on the view - each command has its own instance,
         # and we don't want two buffers to modify the same object (e.g. MoveTextVertCommand)
-        (cmd, _, _) = self.view.command_history(0, True)
+        cmd, _, _ = self.view.command_history(0, True)
         if cmd != 'move_text_up' and cmd != 'move_text_down':
             self.view.move_text_vert_column = col
         else:
@@ -96,7 +96,8 @@ class MoveTextVertCommand(TextCommand):
 class MoveTextUpCommand(MoveTextVertCommand):
     def run(self, edit):
         e = self.view.begin_edit('move_text_vert')
-        for region in self.view.sel():
+        regions = [region for region in self.view.sel()]
+        for region in regions:
             self.move_text_vert(region, edit, -1)
         self.view.end_edit(e)
 
@@ -104,6 +105,7 @@ class MoveTextUpCommand(MoveTextVertCommand):
 class MoveTextDownCommand(MoveTextVertCommand):
     def run(self, edit):
         e = self.view.begin_edit('move_text_vert')
-        for region in self.view.sel():
+        regions = [region for region in self.view.sel()]
+        for region in regions:
             self.move_text_vert(region, edit, 1)
         self.view.end_edit(e)
