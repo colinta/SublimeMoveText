@@ -7,6 +7,10 @@ Select text and drag it around, or setup a text "tunnel" to move code from one l
 Installation
 ------------
 
+1. Using Package Control, install "MoveText"
+
+Or:
+
 1. Open the Sublime Text 2 Packages folder
 
     - OS X: ~/Library/Application Support/Sublime Text 2/Packages/
