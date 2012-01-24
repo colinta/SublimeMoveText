@@ -1,6 +1,0 @@
-[
-    { "keys": ["super+ctrl+left"], "command": "move_text_left" },
-    { "keys": ["super+ctrl+right"], "command": "move_text_right" },
-    { "keys": ["super+ctrl+up"], "command": "move_text_up" },
-    { "keys": ["super+ctrl+down"], "command": "move_text_down" }
-]
