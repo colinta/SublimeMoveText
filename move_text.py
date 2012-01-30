@@ -97,6 +97,7 @@ class MoveTextUpCommand(MoveTextVertCommand):
     def run(self, edit):
         e = self.view.begin_edit('move_text_vert')
         regions = [region for region in self.view.sel()]
+
         # sort by region.end() DESC
         def compare(region_a, region_b):
             return cmp(region_b.end(), region_a.end())
@@ -111,6 +112,7 @@ class MoveTextDownCommand(MoveTextVertCommand):
     def run(self, edit):
         e = self.view.begin_edit('move_text_vert')
         regions = [region for region in self.view.sel()]
+
         # sort by region.end() DESC
         def compare(region_a, region_b):
             return cmp(region_b.end(), region_a.end())
