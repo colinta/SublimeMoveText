@@ -58,11 +58,7 @@ class MoveTextVertCommand(TextCommand):
         self.view.replace(edit, region, '')
 
         # calculate number of characters to the left
-        # of the *last* row
-        if direction > 1:
-            row, col = self.view.rowcol(region.begin())
-        else:
-            row, col = self.view.rowcol(region.begin())
+        row, col = self.view.rowcol(region.begin())
 
         # if the last command was a vertical move, use that column
         # the column is stored on the view - each command has its own instance,
