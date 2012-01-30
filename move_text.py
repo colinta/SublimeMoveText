@@ -2,43 +2,44 @@ from sublime import Region
 from sublime_plugin import TextCommand
 
 
-def move_text_horiz(view, edit, direction):
-    for region in view.sel():
-        if region.empty():
-            continue
+class MoveTextHorizCommand(TextCommand):
+    def move_text_horiz(self, edit, direction):
+        for region in self.view.sel():
+            if region.empty():
+                continue
 
-        orig_region = region
-        sel_region = Region(region.begin() + direction, region.end() + direction)
+            orig_region = region
+            sel_region = Region(region.begin() + direction, region.end() + direction)
 
-        if sel_region.a < 0 or sel_region.b >= view.size():
-            continue
+            if sel_region.a < 0 or sel_region.b > self.view.size():
+                continue
 
-        if direction < 0:
-            dest_region = Region(region.begin() + direction, region.end())
-            move_text = view.substr(region) + view.substr(Region(region.begin() + direction, region.begin()))
-        else:
-            dest_region = Region(region.begin(), region.end() + direction)
-            move_text = view.substr(Region(region.end(), region.end() + direction)) + view.substr(region)
+            if direction < 0:
+                dest_region = Region(region.begin() + direction, region.end())
+                move_text = self.view.substr(region) + self.view.substr(Region(region.begin() + direction, region.begin()))
+            else:
+                dest_region = Region(region.begin(), region.end() + direction)
+                move_text = self.view.substr(Region(region.end(), region.end() + direction)) + self.view.substr(region)
 
-        # Remove selection from RegionSet
-        view.sel().subtract(orig_region)
-        # Replace the selection with transformed text
-        view.replace(edit, dest_region, move_text)
-        # Add the new selection
-        view.sel().add(sel_region)
+            # Remove selection from RegionSet
+            self.view.sel().subtract(orig_region)
+            # Replace the selection with transformed text
+            self.view.replace(edit, dest_region, move_text)
+            # Add the new selection
+            self.view.sel().add(sel_region)
 
 
-class MoveTextLeftCommand(TextCommand):
+class MoveTextLeftCommand(MoveTextHorizCommand):
     def run(self, edit):
         e = self.view.begin_edit('move_text_horiz')
-        move_text_horiz(self.view, edit, -1)
+        self.move_text_horiz(edit, -1)
         self.view.end_edit(e)
 
 
-class MoveTextRightCommand(TextCommand):
+class MoveTextRightCommand(MoveTextHorizCommand):
     def run(self, edit):
         e = self.view.begin_edit('move_text_horiz')
-        move_text_horiz(self.view, edit, 1)
+        self.move_text_horiz(edit, 1)
         self.view.end_edit(e)
 
 
