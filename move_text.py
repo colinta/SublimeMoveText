@@ -54,8 +54,6 @@ class MoveTextVertCommand(TextCommand):
 
         orig_region = region
         move_text = self.view.substr(region)
-        self.view.sel().subtract(orig_region)
-        self.view.replace(edit, region, '')
 
         # calculate number of characters to the left
         row, col = self.view.rowcol(region.begin())
@@ -74,13 +72,21 @@ class MoveTextVertCommand(TextCommand):
         if dest_row < 0 or dest_row > self.view.rowcol(self.view.size())[0]:
             return
 
-        # starting at the destination row, count off "col" characters
-        dest_point = self.view.text_point(dest_row, 0)
+        self.view.sel().subtract(orig_region)
+        self.view.replace(edit, region, '')
 
+        # starting at the destination row at col 0, count off "col" characters
         # it's possible that there aren't enough characters in the destination row,
-        # so try and advance the column until we end up on the wrong row
-        while self.view.rowcol(dest_point + 1)[0] == dest_row and self.view.rowcol(dest_point + 1)[1] <= col:
-            dest_point += 1
+        # so stop if we end up on the wrong row, or past the buffer
+        dest_point = self.view.text_point(dest_row, 0)
+        if dest_point is None:
+            dest_point = self.view.size()
+        else:
+            dest_line = self.view.line(dest_point)
+            if dest_point + col > dest_line.b:
+                dest_point = dest_line.b
+            else:
+                dest_point = dest_point + col
 
         insert_region = Region(dest_point, dest_point)
         sel_region = Region(dest_point, dest_point + len(move_text))
