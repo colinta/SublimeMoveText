@@ -69,8 +69,11 @@ class MoveTextVertCommand(TextCommand):
 
         dest_row = row + direction
 
-        if dest_row < 0 or dest_row > self.view.rowcol(self.view.size())[0]:
-            return
+        max_row = self.view.rowcol(self.view.size())[0]
+        if dest_row < 0:
+            dest_row = 0
+        elif dest_row > max_row:
+            dest_row = max_row
 
         self.view.sel().subtract(orig_region)
         self.view.replace(edit, region, '')
