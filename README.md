@@ -1,7 +1,7 @@
 MoveText plugin for Sublime Text 2
 ==================================
 
-Select text and drag it around, or setup a text "tunnel" to move code from one location to another.
+Select text and move it around using the keyboard, or setup a text "tunnel" to move code from one location to another.
 
 
 Installation
