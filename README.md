@@ -18,6 +18,7 @@ Or:
     - Linux: ~/.Sublime Text 2/Packages/
 
 2. clone this repo
+3. Install keymaps for the commands (see Example.sublime-keymap for my preferred keys)
 
 Commands
 --------
@@ -36,7 +37,7 @@ have enough preceding characters.  It looks like this:
     1. one*dragme*  1. one          1. one       1. one
     2. two          2. two*dragme*  2. two       2. two
     3.              3.              3. *dragme*  3.
-    4. four         4. four         4. four      4. *dragme*four`
+    4. four         4. four         4. four      4. *dragme*four
 
 
 Once the text gets forced to the 0<sup>th</sup> column, it stays there.  I would like to add a mechanism that saves the initial column, but I'm not sure how it would be reset.
