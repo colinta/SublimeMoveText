@@ -50,10 +50,10 @@ class MoveTextVertCommand(TextCommand):
 
     def move_text_vert(self, region, edit, direction):
         if region.empty():
-            if (direction  <  0):
-                self.view.run_command( 'swap_line_up' )
+            if direction < 0:
+                self.view.run_command('swap_line_up')
             else:
-                self.view.run_command( 'swap_line_down' )
+                self.view.run_command('swap_line_down')
             return
 
         orig_region = region
