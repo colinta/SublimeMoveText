@@ -110,8 +110,8 @@ class MoveTextUpCommand(MoveTextVertCommand):
 
         # sort by region.end() DESC
         def get_end(region):
-            return region.end
-        regions.sort(key=get_end)
+            return region.end()
+        regions.sort(key=get_end, reverse=True)
 
         for region in regions:
             self.move_text_vert(region, edit, -1)
@@ -125,8 +125,8 @@ class MoveTextDownCommand(MoveTextVertCommand):
 
         # sort by region.end() DESC
         def get_end(region):
-            return region.end
-        regions.sort(key=get_end)
+            return region.end()
+        regions.sort(key=get_end, reverse=True)
 
         for region in regions:
             self.move_text_vert(region, edit, 1)
