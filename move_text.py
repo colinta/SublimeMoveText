@@ -103,25 +103,11 @@ class MoveTextVertCommand(TextCommand):
 
 class MoveTextUpCommand(MoveTextVertCommand):
     def run(self, edit):
-        regions = [region for region in self.view.sel()]
-
-        # sort by region.end() DESC
-        def get_end(region):
-            return region.end()
-        regions.sort(key=get_end, reverse=True)
-
-        for region in regions:
+        for region in self.view.sel():
             self.move_text_vert(region, edit, -1)
 
 
 class MoveTextDownCommand(MoveTextVertCommand):
     def run(self, edit):
-        regions = [region for region in self.view.sel()]
-
-        # sort by region.end() DESC
-        def get_end(region):
-            return region.end()
-        regions.sort(key=get_end, reverse=True)
-
-        for region in regions:
+        for region in self.view.sel():
             self.move_text_vert(region, edit, 1)
