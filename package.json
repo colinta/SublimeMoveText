@@ -6,7 +6,7 @@
   "labels": ["formatting", "text manipulation"],
   "releases": [
     {
-      "details": "https://github.com/colinta/SublimeMoveText/tree/master",
+      "details": "https://github.com/colinta/SublimeMoveText/tree/st2",
       "sublime_text": "<3000"
     },
     {
