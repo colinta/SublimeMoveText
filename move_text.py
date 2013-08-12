@@ -1,3 +1,5 @@
+from functools import cmp_to_key
+
 from sublime import Region
 from sublime_plugin import TextCommand
 
@@ -31,16 +33,12 @@ class MoveTextHorizCommand(TextCommand):
 
 class MoveTextLeftCommand(MoveTextHorizCommand):
     def run(self, edit):
-        e = self.view.begin_edit('move_text_horiz')
         self.move_text_horiz(edit, -1)
-        self.view.end_edit(e)
 
 
 class MoveTextRightCommand(MoveTextHorizCommand):
     def run(self, edit):
-        e = self.view.begin_edit('move_text_horiz')
         self.move_text_horiz(edit, 1)
-        self.view.end_edit(e)
 
 
 class MoveTextVertCommand(TextCommand):
@@ -105,29 +103,11 @@ class MoveTextVertCommand(TextCommand):
 
 class MoveTextUpCommand(MoveTextVertCommand):
     def run(self, edit):
-        e = self.view.begin_edit('move_text_vert')
-        regions = [region for region in self.view.sel()]
-
-        # sort by region.end() DESC
-        def get_end(region):
-            return region.end()
-        regions.sort(key=get_end, reverse=True)
-
-        for region in regions:
+        for region in self.view.sel():
             self.move_text_vert(region, edit, -1)
-        self.view.end_edit(e)
 
 
 class MoveTextDownCommand(MoveTextVertCommand):
     def run(self, edit):
-        e = self.view.begin_edit('move_text_vert')
-        regions = [region for region in self.view.sel()]
-
-        # sort by region.end() DESC
-        def get_end(region):
-            return region.end()
-        regions.sort(key=get_end, reverse=True)
-
-        for region in regions:
+        for region in self.view.sel():
             self.move_text_vert(region, edit, 1)
-        self.view.end_edit(e)
