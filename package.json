@@ -1,7 +1,17 @@
 {
-  "repo": "SublimeMoveText",
   "name": "MoveText",
   "description": "Select text and drag it around, or setup a text tunnel to move code from one location to another.",
   "author": "Colin T.A. Gray (colinta)",
-  "homepage": "https://github.com/colinta/SublimeMoveText"
+  "details": "https://github.com/colinta/SublimeMoveText",
+  "labels": ["formatting", "text manipulation"],
+  "releases": [
+    {
+      "details": "https://github.com/colinta/SublimeMoveText/tree/master",
+      "sublime_text": "<3000"
+    },
+    {
+      "details": "https://github.com/colinta/SublimeMoveText/tree/st3",
+      "sublime_text": ">=3000"
+    }
+  ]
 }
