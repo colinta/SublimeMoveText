@@ -3,7 +3,6 @@ MoveText
 
 Select text and move it around using the keyboard, or setup a text "tunnel" to move code from one location to another.
 
-
 Installation
 ------------
 
@@ -12,10 +11,9 @@ Installation
 Or:
 
 1. Open the Sublime Text Packages folder
-
     - OS X: ~/Library/Application Support/Sublime Text 3/Packages/
     - Windows: %APPDATA%/Sublime Text 3/Packages/
-    - Linux: ~/.Sublime Text 3/Packages/
+    - Linux: ~/.Sublime Text 3/Packages/ or ~/.config/sublime-text-3/Packages
 
 2. clone this repo
 3. Install keymaps for the commands (see Example.sublime-keymap for my preferred keys)
@@ -38,13 +36,16 @@ Commands
 
 `move_text_down`: Moves the selected text one line down
 
-When moving text up and down, funny things happen when the destination line doesn't
-have enough preceding characters.  It looks like this:
+When moving text up and down, funny things happen when the destination line doesn't have enough preceding characters.  An attempt *is made* to keep the text on the same column, but the mechanism for this uses `sublime.View.command_history`, which doesn't update after every movement.  It updates in between "Undo" events, so if you move the text in the opposite direction, or if you pause long enough for an "undo" to register, the text will move correctly.  It looks like this:
 
     1. one*dragme*  1. one          1. one       1. one
     2. two          2. two*dragme*  2. two       2. two
     3.              3.              3. *dragme*  3.
     4. four         4. four         4. four      4. *dragme*four
 
+But if you move the text *up* first, it will move correctly:
 
-Once the text gets forced to the 0<sup>th</sup> column, it stays there.  I would like to add a mechanism that saves the initial column, but I'm not sure how it would be reset.
+    1. one          1. one*dragme*  1. one          1. one       1. one
+    2. two*dragme*  2. two          2. two*dragme*  2. two       2. two
+    3.              3.              3.              3. *dragme*  3.
+    4. four         4. four         4. four         4. four      4. fou*dragme*r

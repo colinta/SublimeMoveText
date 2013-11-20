@@ -66,7 +66,7 @@ class MoveTextVertCommand(TextCommand):
         cmd, _, _ = self.view.command_history(0, True)
         if cmd != 'move_text_up' and cmd != 'move_text_down':
             self.view.move_text_vert_column = col
-        else:
+        elif self.view.move_text_vert_column:
             col = self.view.move_text_vert_column
 
         dest_row = row + direction
