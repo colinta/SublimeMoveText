@@ -36,6 +36,14 @@ Commands
 
 `move_text_down`: Moves the selected text one line down
 
+`move_text_left_ten`: Moves the selected text ten characters to the left
+
+`move_text_right_ten`: Moves the selected text ten characters to the right
+
+`move_text_up_ten`: Moves the selected text ten lines up
+
+`move_text_down_ten`: Moves the selected text ten lines down
+
 When moving text up and down, funny things happen when the destination line doesn't have enough preceding characters.  An attempt *is made* to keep the text on the same column, but the mechanism for this uses `sublime.View.command_history`, which doesn't update after every movement.  It updates in between "Undo" events, so if you move the text in the opposite direction, or if you pause long enough for an "undo" to register, the text will move correctly.  It looks like this:
 
     1. one*dragme*  1. one          1. one       1. one
