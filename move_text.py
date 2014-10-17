@@ -36,9 +36,19 @@ class MoveTextLeftCommand(MoveTextHorizCommand):
         self.move_text_horiz(edit, -1)
 
 
+class MoveTextLeftTenCommand(MoveTextHorizCommand):
+    def run(self, edit):
+        self.move_text_horiz(edit, -10)
+
+
 class MoveTextRightCommand(MoveTextHorizCommand):
     def run(self, edit):
         self.move_text_horiz(edit, 1)
+
+
+class MoveTextRightTenCommand(MoveTextHorizCommand):
+    def run(self, edit):
+        self.move_text_horiz(edit, 10)
 
 
 class MoveTextVertCommand(TextCommand):
@@ -107,7 +117,19 @@ class MoveTextUpCommand(MoveTextVertCommand):
             self.move_text_vert(region, edit, -1)
 
 
+class MoveTextUpTenCommand(MoveTextVertCommand):
+    def run(self, edit):
+        for region in self.view.sel():
+            self.move_text_vert(region, edit, -10)
+
+
 class MoveTextDownCommand(MoveTextVertCommand):
     def run(self, edit):
         for region in self.view.sel():
             self.move_text_vert(region, edit, 1)
+
+
+class MoveTextDownTenCommand(MoveTextVertCommand):
+    def run(self, edit):
+        for region in self.view.sel():
+            self.move_text_vert(region, edit, 10)

@@ -14,5 +14,21 @@
     {
         "caption": "MoveText: Move Down",
         "command": "move_text_down"
+    },
+    {
+        "caption": "MoveText: Move Left Ten",
+        "command": "move_text_left"
+    },
+    {
+        "caption": "MoveText: Move Right Ten",
+        "command": "move_text_right"
+    },
+    {
+        "caption": "MoveText: Move Up Ten",
+        "command": "move_text_up"
+    },
+    {
+        "caption": "MoveText: Move Down Ten",
+        "command": "move_text_down"
     }
 ]
