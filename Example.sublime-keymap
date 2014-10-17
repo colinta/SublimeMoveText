@@ -2,5 +2,9 @@
     { "keys": ["super+ctrl+left"], "command": "move_text_left" },
     { "keys": ["super+ctrl+right"], "command": "move_text_right" },
     { "keys": ["super+ctrl+up"], "command": "move_text_up" },
-    { "keys": ["super+ctrl+down"], "command": "move_text_down" }
+    { "keys": ["super+ctrl+down"], "command": "move_text_down" },
+    { "keys": ["super+ctrl+alt+left"], "command": "move_text_left_ten" },
+    { "keys": ["super+ctrl+alt+right"], "command": "move_text_right_ten" },
+    { "keys": ["super+ctrl+alt+up"], "command": "move_text_up_ten" },
+    { "keys": ["super+ctrl+alt+down"], "command": "move_text_down_ten" }
 ]
