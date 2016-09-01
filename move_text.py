@@ -47,14 +47,13 @@ class MoveTextVertCommand(TextCommand):
         view.move_text_vert_column = None
 
     def move_text_vert(self, region, edit, direction):
-        if region.empty():
-            if direction < 0:
-                self.view.run_command('swap_line_up')
-            else:
-                self.view.run_command('swap_line_down')
-            return
-
         orig_region = region
+        select_begin = None
+        if region.empty():
+            row, col = self.view.rowcol(region.begin())
+            select_begin = col
+            region = self.view.full_line(region.begin())
+
         move_text = self.view.substr(region)
 
         # calculate number of characters to the left
@@ -94,20 +93,30 @@ class MoveTextVertCommand(TextCommand):
                 dest_point = dest_point + col
 
         insert_region = Region(dest_point, dest_point)
-        sel_region = Region(dest_point, dest_point + len(move_text))
-
         self.view.replace(edit, insert_region, move_text)
-        self.view.sel().add(sel_region)
-        self.view.show(sel_region)
+
+        if select_begin is None:
+            sel_region = Region(dest_point, dest_point + len(move_text))
+        else:
+            sel_region = Region(dest_point + select_begin)
+        return sel_region
 
 
 class MoveTextUpCommand(MoveTextVertCommand):
     def run(self, edit):
-        for region in self.view.sel():
-            self.move_text_vert(region, edit, -1)
+        new_regions = []
+        for region in list(self.view.sel()):
+            new_regions.append(self.move_text_vert(region, edit, -1))
+        self.view.sel().clear()
+        self.view.sel().add_all(new_regions)
+        self.view.show(self.view.sel()[0])
 
 
 class MoveTextDownCommand(MoveTextVertCommand):
     def run(self, edit):
-        for region in self.view.sel():
-            self.move_text_vert(region, edit, 1)
+        new_regions = []
+        for region in reversed(self.view.sel()):
+            new_regions.append(self.move_text_vert(region, edit, 1))
+        self.view.sel().clear()
+        self.view.sel().add_all(new_regions)
+        self.view.show(self.view.sel()[-1])
