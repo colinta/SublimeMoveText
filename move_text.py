@@ -1,12 +1,16 @@
 from functools import cmp_to_key
 
+import sublime
+import sublime_plugin
 from sublime import Region
-from sublime_plugin import TextCommand
 
 
-class MoveTextHorizCommand(TextCommand):
+class MoveTextHorizCommand(sublime_plugin.TextCommand):
     def move_text_horiz(self, edit, direction):
-        for region in self.view.sel():
+        selections = list(self.view.sel())
+        if direction == 1:
+            selections.reverse()
+        for region in selections:
             if region.empty():
                 continue
 
@@ -41,7 +45,7 @@ class MoveTextRightCommand(MoveTextHorizCommand):
         self.move_text_horiz(edit, 1)
 
 
-class MoveTextVertCommand(TextCommand):
+class MoveTextVertCommand(sublime_plugin.TextCommand):
     def __init__(self, view):
         super(MoveTextVertCommand, self).__init__(view)
         view.move_text_vert_column = None
@@ -92,8 +96,7 @@ class MoveTextVertCommand(TextCommand):
             else:
                 dest_point = dest_point + col
 
-        insert_region = Region(dest_point, dest_point)
-        self.view.replace(edit, insert_region, move_text)
+        self.view.insert(edit, dest_point, move_text)
 
         if select_begin is None:
             sel_region = Region(dest_point, dest_point + len(move_text))
@@ -105,11 +108,15 @@ class MoveTextVertCommand(TextCommand):
 class MoveTextUpCommand(MoveTextVertCommand):
     def run(self, edit):
         new_regions = []
-        for region in list(self.view.sel()):
+        for region in self.view.sel():
             new_regions.append(self.move_text_vert(region, edit, -1))
-        self.view.sel().clear()
+
         self.view.sel().add_all(new_regions)
-        self.view.show(self.view.sel()[0])
+        try:
+            region = new_regions[0]
+            self.view.show(region.begin())
+        except IndexError:
+            pass
 
 
 class MoveTextDownCommand(MoveTextVertCommand):
@@ -117,6 +124,10 @@ class MoveTextDownCommand(MoveTextVertCommand):
         new_regions = []
         for region in reversed(self.view.sel()):
             new_regions.append(self.move_text_vert(region, edit, 1))
-        self.view.sel().clear()
+
         self.view.sel().add_all(new_regions)
-        self.view.show(self.view.sel()[-1])
+        try:
+            region = new_regions[0]
+            self.view.show(region.begin())
+        except IndexError:
+            pass
