@@ -107,8 +107,9 @@ class MoveTextVertCommand(sublime_plugin.TextCommand):
 
 class MoveTextUpCommand(MoveTextVertCommand):
     def run(self, edit):
+        regions = list(self.view.sel())
         new_regions = []
-        for region in self.view.sel():
+        for region in regions:
             new_regions.append(self.move_text_vert(region, edit, -1))
 
         self.view.sel().add_all(new_regions)
