@@ -7,9 +7,19 @@ from sublime import Region
 
 class MoveTextHorizCommand(sublime_plugin.TextCommand):
     def move_text_horiz(self, edit, direction, selections=None):
-        selections = selections or list(self.view.sel())
+        selections = list(self.view.sel())
         if direction > 1:
             selections.reverse()
+        if all(region.empty() for region in selections):
+            window = self.view.window()
+            view = self.view
+            group, index = window.get_view_index(view)
+            view_len = len(window.views_in_group(group))
+            if direction > 0 and index < view_len - 1:
+                window.set_view_index(view, group, index + 1)
+            elif direction < 0 and index > 0:
+                window.set_view_index(view, group, index - 1)
+            return
         for region in selections:
             if region.empty():
                 continue
